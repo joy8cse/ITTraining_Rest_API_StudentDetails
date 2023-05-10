@@ -1,0 +1,146 @@
+{
+	"info": {
+		"_postman_id": "d2193ca5-fc31-4c0c-bf54-99afe47fd316",
+		"name": "ITTrainingPractice2",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "23999799"
+	},
+	"item": [
+		{
+			"name": "fetching details",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = pm.response.json()\r",
+							"\r",
+							"pm.test(\"success request - 200\", function (){\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"console.log(jsonData.length)\r",
+							"\r",
+							"for(i=0; i<jsonData.length; i++){\r",
+							"    if(jsonData[i].first_name == \"Esrat\")\r",
+							"   console.log(\"First Name: \"+jsonData[i].first_name)\r",
+							"   }"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/api/studentsDetails/",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"studentsDetails",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = pm.response.json()\r",
+							"\r",
+							"pm.test(\"Validate Success Request - 201\", function(){\r",
+							"    pm.response.to.have.status(201);\r",
+							"});\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\"first_name\": \"sample string 2\",\r\n\"middle_name\": \"sample string 3\",\r\n\"last_name\": \"sample string 4\",\r\n\"date_of_birth\": \"sample string 5\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/api/studentsDetails",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"studentsDetails"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Specific id",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = pm.response.json()\r",
+							"\r",
+							"pm.environment.set(\"id\", jsonData.data.id)\r",
+							"\r",
+							"pm.test(\"Id Validation\", function(){\r",
+							"    pm.expect(jsonData.data.id).to.eql(pm.environment.get(\"id\"))\r",
+							"})\r",
+							"\r",
+							"pm.test(\"First Name Validation\", function(){\r",
+							"    pm.expect(jsonData.data.first_name).to.eql(\"Miss\")\r",
+							"})\r",
+							"\r",
+							"pm.test(\"Middle Name Validation\", function(){\r",
+							"    pm.expect(jsonData.data.middle_name).to.eql(\"Alia\")\r",
+							"})\r",
+							"\r",
+							"pm.test(\"Last Name Validation\", function(){\r",
+							"    pm.expect(jsonData.data.last_name).to.eql(\"Casper\")\r",
+							"})\r",
+							"\r",
+							"pm.test(\"Date Of Birth Validation\", function(){\r",
+							"    pm.expect(jsonData.data.date_of_birth).to.eql(\"Fri Mar 01 2024 21:52:51 GMT+0600 (Bangladesh Standard Time)\")\r",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/api/studentsDetails/{{id}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"studentsDetails",
+						"{{id}}"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
